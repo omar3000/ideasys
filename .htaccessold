@@ -1,0 +1,27 @@
+Options +FollowSymlinks
+RewriteEngine On
+
+# deal with backend first
+RewriteCond %{REQUEST_URI} ^/ideasys/(sistema) 
+RewriteRule ^sistema/assets/(.*)$ backend/web/assets/$1 [L]
+RewriteRule ^sistema/css/(.*)$ backend/web/css/$1 [L]
+RewriteRule ^sistema/js/(.*)$ backend/web/css/$1 [L]
+RewriteRule ^sistema/uploads/(.*)$ backend/uploads/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/ideasys/backend/web/(assets|css)/ 
+RewriteCond %{REQUEST_URI} ^/ideasys/(backend)  
+RewriteRule ^.*$ backend/web/index.php [L]
+
+
+
+
+RewriteCond %{REQUEST_URI} ^/ideasys/(assets|css)  
+RewriteRule ^assets/(.*)$ frontend/web/assets/$1 [L]
+RewriteRule ^css/(.*)$ frontend/web/css/$1 [L]
+RewriteRule ^uploads/(.*)$ common/web/uploads/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/ideasys/(frontend|backend)/web/(assets|css)/  
+RewriteCond %{REQUEST_URI} !index.php
+RewriteCond %{REQUEST_FILENAME} !-f [OR]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*$ frontend/web/index.php
